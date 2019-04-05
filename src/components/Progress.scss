@@ -1,0 +1,14 @@
+.progress {
+	width: 100%;
+	height: 15px;
+	background: #ddd;
+	border-radius: 7px;
+
+	margin-top: 5px;
+	margin-bottom: 25px;
+	.bar {
+		height: 15px;
+		background: #9b4dca;
+		border-radius: 7px;
+	}
+}
