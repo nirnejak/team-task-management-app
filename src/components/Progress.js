@@ -7,12 +7,12 @@ export default class Progress extends Component {
         return (
             <div style={{ marginBottom: '50px' }}>
                 {
-                    this.props.progress.map(pro => (
+                    this.props.progress.map(progressElement => (
                         <div>
-                            <strong>{pro.category}: </strong>
-                            {pro.completed}/{pro.total}
+                            <strong>{progressElement.category}: </strong>
+                            {progressElement.completed}/{progressElement.total}
                             <div className="progress">
-                                <div className="bar" style={{ width: `${(pro.completed / pro.total) * 100}%` }}></div>
+                                <div className="bar" style={{ width: `${(progressElement.completed / progressElement.total) * 100}%` }}></div>
                             </div>
                         </div>
                     ))

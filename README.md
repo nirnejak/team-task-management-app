@@ -66,3 +66,18 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+
+```js
+onChangeThree = (e) => this.setState({ ...this.state, category: e.value });
+
+<div className="div" style={{ flex: '5' }}>
+    <Select
+        name="Todo Category"
+        options={this.props.categories.map(category => ({ value: category, label: category }))}
+        onChange={this.onChangeThree}
+        placeholder="Select Task Category..."
+    />
+</div>
+```

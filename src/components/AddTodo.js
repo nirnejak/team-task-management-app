@@ -7,17 +7,19 @@ export class AddTodo extends Component {
         title: '',
         category: ''
     }
+    selectField = React.createRef();
 
     onSubmit = (e) => {
         e.preventDefault();
         this.props.addTodo(this.state.title, this.state.category);
+        // Resetting the Select Field
+        this.selectField.current.value = '';
+        // Resetting the State
         this.setState({ title: '', category: '' });
     }
 
     onChange = (e) => this.setState({ ...this.state, title: e.target.value });
-    onChangeTwo = (e) => this.setState({ ...this.state, category: e.target.value });
-    onChangeThree = (e) => this.setState({ ...this.state, category: e.value });
-
+    onSelectChange = (e) => this.setState({ ...this.state, category: e.target.value });
 
     render() {
         return (
@@ -29,16 +31,9 @@ export class AddTodo extends Component {
                     placeholder="Add Todo..."
                     value={this.state.title}
                     onChange={this.onChange}
+                    required
                 />
-                {/* <div className="div" style={{ flex: '5' }}>
-                    <Select
-                        name="Todo Category"
-                        options={this.props.categories.map(category => ({ value: category, label: category }))}
-                        onChange={this.onChangeThree}
-                        placeholder="Select Task Category..."
-                    />
-                </div> */}
-                <select style={{ flex: '5' }} onChange={this.onChangeTwo}>
+                <select style={{ flex: '5' }} onChange={this.onSelectChange} ref={this.selectField} required>
                     <option value="">Select Task Category...</option>
                     <option value="Fava">Fava</option>
                     <option value="Destination">Destination</option>
