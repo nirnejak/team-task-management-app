@@ -22,10 +22,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://my-json-server.typicode.com/nirnejak/demo/categories')
+    axios.get('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/categories')
       .then(res => this.setState({ ...this.state, categories: res.data }))
       .catch(err => console.log(err));
-    axios.get('https://my-json-server.typicode.com/nirnejak/demo/todos?_limit=10')
+    axios.get('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos?_limit=10')
       .then(res => {
         this.setState({ ...this.state, todos: res.data })
         this.calculateProgress();
@@ -69,13 +69,13 @@ class App extends Component {
 
   // Delete Todo
   delTodo = (id) => {
-    axios.delete(`https://my-json-server.typicode.com/nirnejak/demo/todos/${id}`)
+    axios.delete(`https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos/${id}`)
       .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }))
       .catch(err => console.log(err));
   }
 
   addTodo = (title, category) => {
-    axios.post('https://my-json-server.typicode.com/nirnejak/demo/todos', {
+    axios.post('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos', {
       title: title,
       completed: false,
       category: category
