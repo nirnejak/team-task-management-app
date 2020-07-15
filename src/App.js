@@ -1,37 +1,42 @@
 // Importing Modules
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 // Importing React-Router
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Importing Components
-import Todos from './components/Todos';
-import Header from './components/layout/Header';
-import AddTodo from './components/AddTodo';
-import About from './components/pages/About';
-import Progress from './components/Progress';
+import Todos from "./components/Todos";
+import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
+import About from "./components/pages/About";
+import Progress from "./components/Progress";
 
-import './App.scss';
+import "./App.scss";
 
 class App extends Component {
   state = {
     todos: [],
     categories: [],
-    progress: []
-  }
+    progress: [],
+  };
 
   componentDidMount() {
-    axios.get('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/categories')
-      .then(res => this.setState({ ...this.state, categories: res.data }))
-      .catch(err => console.log(err));
-    axios.get('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos?_limit=10')
-      .then(res => {
-        this.setState({ ...this.state, todos: res.data })
-        this.calculateProgress();
-      }
+    axios
+      .get(
+        "https://my-json-server.typicode.com/nirnejak/fava-related-task-2/categories"
       )
-      .catch(err => console.log(err));
+      .then((res) => this.setState({ ...this.state, categories: res.data }))
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        "https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos?_limit=10"
+      )
+      .then((res) => {
+        this.setState({ ...this.state, todos: res.data });
+        this.calculateProgress();
+      })
+      .catch((err) => console.log(err));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,47 +49,61 @@ class App extends Component {
     let progress = this.state.categories.map((category) => {
       let item = { category: category };
 
-      let categoryList = this.state.todos.filter(todo => todo.category === category ? true : false);
+      let categoryList = this.state.todos.filter((todo) =>
+        todo.category === category ? true : false
+      );
       item["total"] = categoryList.length;
-      item["completed"] = categoryList.filter(todo => todo.completed).length;
+      item["completed"] = categoryList.filter((todo) => todo.completed).length;
 
       return item;
-    })
+    });
     this.setState({
       ...this.state,
-      progress: progress
-    })
-  }
+      progress: progress,
+    });
+  };
 
   // Toggle Complete
   markComplete = (id) => {
     this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id)
-          todo.completed = !todo.completed;
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) todo.completed = !todo.completed;
         return todo;
-      })
+      }),
     });
-  }
+  };
 
   // Delete Todo
   delTodo = (id) => {
-    axios.delete(`https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos/${id}`)
-      .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }))
-      .catch(err => console.log(err));
-  }
+    axios
+      .delete(
+        `https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos/${id}`
+      )
+      .then((res) =>
+        this.setState({
+          todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+        })
+      )
+      .catch((err) => console.log(err));
+  };
 
   addTodo = (title, category) => {
-    axios.post('https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos', {
-      title: title,
-      completed: false,
-      category: category
-    })
-      .then(res => this.setState({
-        todos: [res.data, ...this.state.todos]
-      }))
-      .catch(err => console.log(err));
-  }
+    axios
+      .post(
+        "https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos",
+        {
+          title: title,
+          completed: false,
+          category: category,
+        }
+      )
+      .then((res) =>
+        this.setState({
+          todos: [res.data, ...this.state.todos],
+        })
+      )
+      .catch((err) => console.log(err));
+  };
 
   render() {
     return (
@@ -93,13 +112,24 @@ class App extends Component {
           <div className="container">
             <Header />
             <br />
-            <Route exact path="/" render={props => (
-              <React.Fragment>
-                <AddTodo addTodo={this.addTodo} categories={this.state.categories} />
-                <Progress progress={this.state.progress} />
-                <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
-              </React.Fragment>
-            )} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <React.Fragment>
+                  <AddTodo
+                    addTodo={this.addTodo}
+                    categories={this.state.categories}
+                  />
+                  <Progress progress={this.state.progress} />
+                  <Todos
+                    todos={this.state.todos}
+                    markComplete={this.markComplete}
+                    delTodo={this.delTodo}
+                  />
+                </React.Fragment>
+              )}
+            />
 
             <Route path="/about" component={About} />
           </div>
