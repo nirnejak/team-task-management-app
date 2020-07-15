@@ -78,9 +78,7 @@ const App = () => {
   // Delete Todo
   const delTodo = (id: string) => {
     axios
-      .delete(
-        `https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos/${id}`
-      )
+      .delete(`https://my-json-server.typicode.com/nirnejak/fava-related-task-2/todos/${id}`)
       .then((res) =>
         setState({
           ...state,

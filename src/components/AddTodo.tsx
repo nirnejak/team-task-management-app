@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 export interface NewTodo {
   title: string;
